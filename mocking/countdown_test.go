@@ -5,23 +5,25 @@ import (
 	"testing"
 )
 
+const (
+	write = "write"
+	sleep = "sleep"
+)
+
 func TestCountdown(t *testing.T) {
-	buffer := &bytes.Buffer{}
-	sleeper := &SpySleeper{}
+	t.Run("print 3 to Go!", func(t *testing.T) {
+		buffer := &bytes.Buffer{}
+		Countdown(buffer, &SpyCountdownOperation{})
 
-	Countdown(buffer, sleeper)
-
-	got := buffer.String()
-	want := `3
+		got := buffer.String()
+		want := `3
 2
 1
 Go!`
 
-	if got != want {
-		t.Errorf("got %q want %q", got, want)
-	}
+		if got != want {
+			t.Errorf("got %q want %q", got, want)
+		}
+	})
 
-	if sleeper.Calls != 3 {
-		t.Errorf("not enough calls to sleeper, want 3 got %d", sleeper.Calls)
-	}
 }
