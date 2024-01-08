@@ -17,14 +17,6 @@ type Sleeper interface {
 	Sleep()
 }
 
-// Sleeper
-type DefaultSleeper struct {
-}
-
-func (ds *DefaultSleeper) Sleep() {
-	time.Sleep(time.Second)
-}
-
 // SpyCountDown for mocking
 type SpyCountdownOperations struct {
 	Calls []string
@@ -58,6 +50,7 @@ func (s *SpyTime) Sleep(sleepTime time.Duration) {
 	s.durationSlept = sleepTime
 }
 
+// Core Function CountDown
 func Countdown(out io.Writer, sleeper Sleeper) {
 	for i := countdownStart; i > 0; i-- {
 		fmt.Fprintln(out, i)
